@@ -1,6 +1,6 @@
 const API = process.env.POKE_API || 'https://pokeapi.co/api/v2/'
-
-const getPokemons = (limit = 151) => {
+//eran 151
+const getPokemons = (limit = 20) => {
     const getPokeApi = fetch(`${API}pokemon?limit=${limit}`)
 
     return getPokeApi

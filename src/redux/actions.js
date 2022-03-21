@@ -28,12 +28,14 @@ export const getPokemonsWithDetails = payload => async dispatch => {
         const data = await res.json();
         const pokemonList = data.results;
   
-        let pokemonResponse = await Promise.all(
+        const pokemonResponse = await Promise.all(
           pokemonList.map(async pokemon => {
             let pokemonRespons = await fetch(pokemon.url)
+            console.log(pokemonRespons.json())
             return pokemonRespons.json()
           })
         );
+        
         dispatch(setPokemon(pokemonResponse));
       } catch (error) {
         console.log("FETCH ERROR: ", error);
