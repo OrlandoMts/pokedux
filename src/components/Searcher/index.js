@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Search } from 'semantic-ui-react';
 import { filterPokemon } from '../../redux/actions';
