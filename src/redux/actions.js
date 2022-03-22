@@ -1,5 +1,5 @@
-import { SET_POKEMONS, SET_ERROR, CLEAR_ERROR, FETCH_POKEMON_DETAIL } from "./type";
-import getPokemons from "../api/getPokemons";
+import { SET_POKEMONS, SET_ERROR, CLEAR_ERROR, SEARCH_POKEMON } from "./type";
+import { getPokemons, getPokemonsWithDetails} from "../api/getPokemons";
 
 export const setPokemon = payload => ({
     type: SET_POKEMONS,
@@ -16,28 +16,32 @@ export const clearError = payload => ({
     payload,
 })
 
-// NO lo uso...
-export const fetchPokemonDetails = payload => ({
-    type: FETCH_POKEMON_DETAIL,
+export const searchPokemon = payload => ({
+    type: SEARCH_POKEMON,
     payload,
 })
 
-export const getPokemonsWithDetails = payload => async dispatch => {
+export const fetchPokemonsWithDetails = payload => async dispatch => {
     try {
         const res = await getPokemons();
         const data = await res.json();
         const pokemonList = data.results;
-  
-        const pokemonResponse = await Promise.all(
-          pokemonList.map(async pokemon => {
-            let pokemonRespons = await fetch(pokemon.url)
-            console.log(pokemonRespons.json())
-            return pokemonRespons.json()
-          })
-        );
+
+        const pokemonDetail = await getPokemonsWithDetails(pokemonList);
         
-        dispatch(setPokemon(pokemonResponse));
+        dispatch(setPokemon(pokemonDetail));
       } catch (error) {
         console.log("FETCH ERROR: ", error);
       }
-};
+}
+
+export const filterPokemon = (payload, input) => dispatch => {
+    let sp = payload.filter(pokemon => {
+        const pokemonText = pokemon.name.toLowerCase();
+        const searchText = input.toLowerCase();
+
+        return pokemonText.includes(searchText)
+    })
+
+    dispatch(searchPokemon(sp));
+}

@@ -6,10 +6,10 @@ const Menu = () => {
   return (
     <SemanticMenu fixed='top'>
       <Container>
-        <SemanticMenu.Item to='/'>
+        <SemanticMenu.Item href='/'>
           <Image size='small' src={logo} />
         </SemanticMenu.Item>
-        <SemanticMenu.Item to='/'>Home</SemanticMenu.Item>
+        <SemanticMenu.Item href='/'>Home</SemanticMenu.Item>
         <SemanticMenu.Item to='/' position='right'>
           Favorites
         </SemanticMenu.Item>
